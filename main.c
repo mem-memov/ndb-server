@@ -8,6 +8,7 @@ void handleShutDown()
 {
     if (NULL != server) {
         Server_stop(server);
+        Server_destruct(server);
     }
 
     exit(0);
@@ -20,8 +21,9 @@ int main(int argc, char *argv[])
 
     int port = 43152;
     int connectionLimit = 10;
+    int bufferLength = 8192;
 
-    server = Server_construct(port, connectionLimit);
+    server = Server_construct(port, connectionLimit, bufferLength);
 
     Server_start(server);
 

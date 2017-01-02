@@ -20,4 +20,7 @@ void Error_afterListenerListening(int listenResult);
 void Error_beforeListenerAcceptingConnection(int listenerDescriptor);
 void Error_afterListenerAcceptingConnection(int connectionDescriptor);
 
+void Error_whileConnectionReceiving(int availableBufferLength);
+void Error_afterConnectionSending(int sendResult);
+
 #endif

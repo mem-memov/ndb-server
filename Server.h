@@ -4,10 +4,11 @@
 struct Server {
     int port;
     int connectionLimit;
+    int bufferLength;
     struct Listener * listener;
 };
 
-struct Server * Server_construct(int port, int connectionLimit);
+struct Server * Server_construct(int port, int connectionLimit, int bufferLength);
 
 void Server_destruct(struct Server * server);
 

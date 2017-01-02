@@ -87,3 +87,19 @@ void Error_afterListenerAcceptingConnection(int connectionDescriptor)
         exit(1);
     }
 }
+
+void Error_whileConnectionReceiving(int availableBufferLength)
+{
+    if (0 > availableBufferLength) {
+        fprintf(stderr, "Error while reading connection. Available buffer length: %d.\n", availableBufferLength);
+        exit(1);
+    }
+}
+
+void Error_afterConnectionSending(int sendResult)
+{
+    if (-1 == sendResult) {
+        fprintf(stderr, "Error while sending to connection.\n");
+        exit(1);
+    }
+}

@@ -10,7 +10,7 @@ Server.o: Server.c Server.h Listener.h Connection.h
 Listener.o: Listener.c Listener.h Connection.h Error.h
 	gcc -c Listener.c
 
-Connection.o: Connection.c Connection.h
+Connection.o: Connection.c Connection.h Error.h
 	gcc -c Connection.c
 
 Error.o: Error.c Error.h
