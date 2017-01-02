@@ -26,14 +26,16 @@ int Connection_receive(struct Connection * connection, char * buffer, int buffer
 {
     int receivedLength;
     int availableLength = bufferLength - 1;
+    int filledLength;
+    char lastCharacter;
 
     do {
         receivedLength = recv(connection->descriptor, buffer, availableLength, 0);
         availableLength -= receivedLength;
         Error_whileConnectionReceiving(availableLength);
-    } while (receivedLength > 0 && availableLength > 0);
-
-    int filledLength = bufferLength - availableLength - 1;
+        filledLength = bufferLength - availableLength - 1;
+        lastCharacter = buffer[filledLength - 1];
+    } while (receivedLength > 0 && lastCharacter != '\n');
 
     buffer[filledLength] = '\0';
     filledLength++;
