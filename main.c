@@ -1,11 +1,21 @@
 #include "Server.h"
 #include "Signal.h"
+#include <stdlib.h>
 
-struct Server * server;
+struct Server * server = NULL;
+
+void handleShutDown()
+{
+    if (NULL != server) {
+        Server_stop(server);
+    }
+
+    exit(0);
+}
 
 int main(int argc, char *argv[])
 {
-    struct Signal * sigint = Signal_construct(SIGINT, Server_handleShutDown);
+    struct Signal * sigint = Signal_constructSigint(handleShutDown);
     Signal_catch(sigint);
 
     int port = 43152;

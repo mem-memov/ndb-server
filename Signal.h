@@ -6,7 +6,7 @@ struct Signal {
     void (*handler)(int);
 };
 
-struct Signal * Signal_construct(int code, void (*handler)(int));
+struct Signal * Signal_constructSigint(void (*handler)(int));
 
 void Signal_destruct(struct Signal * signal);
 

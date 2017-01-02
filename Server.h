@@ -11,8 +11,8 @@ struct Server * Server_construct(int port, int connectionLimit);
 
 void Server_destruct(struct Server * server);
 
-void Server_start();
+void Server_start(struct Server * server);
 
-void Server_handleShutDown(int signal);
+void Server_stop(struct Server * server);
 
 #endif

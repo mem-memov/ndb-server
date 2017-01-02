@@ -1,12 +1,13 @@
 #include "Signal.h"
+#include "Server.h"
 #include <stdlib.h>
-#include <stdio.h>
+#include <signal.h>
 
-struct Signal * Signal_construct(int code, void (*handler)(int))
+struct Signal * Signal_constructSigint(void (*handler)(int))
 {
 	struct Signal * signal = malloc(sizeof(struct Signal));
 
-	signal->code = code;
+	signal->code = SIGINT;
 	signal->handler = handler;
 
 	return signal;
