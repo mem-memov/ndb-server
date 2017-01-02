@@ -22,3 +22,8 @@ Signal.o: Signal.c Signal.h Server.h
 clean:
 	rm *.o ndb-server
 
+install:
+	install ndb-server /usr/local/bin/ndb-server
+
+uninstall:
+	rm /usr/local/bin/ndb-server
