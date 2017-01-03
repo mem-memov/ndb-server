@@ -1,5 +1,5 @@
 ndb: main.o Server.o Listener.o Connection.o Error.o Signal.o Application.o
-	gcc main.o Server.o Listener.o Connection.o Error.o Signal.o Application.o -o ndb-server
+	gcc main.o Server.o Listener.o Connection.o Error.o Signal.o Application.o -lndb -o ndb-server
 
 main.o: main.c Server.h
 	gcc -c main.c
@@ -23,7 +23,7 @@ Application.o: Application.c Application.h Error.h
 	gcc -c Application.c
 
 clean:
-	rm *.o ndb-server
+	rm --force *.o ndb-server
 
 install:
 	install ndb-server /usr/local/bin/ndb-server

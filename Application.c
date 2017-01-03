@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "Error.h"
+#include <ndb.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -33,7 +34,7 @@ int Application_execute(struct Application * application, char * request, int re
         dup2(fileDescriptors[1], 1);
         close(fileDescriptors[0]);
 
-        execlp("ndb", "ndb", NULL);
+        ndb_create();
 
         Error_afterApplicationExecuting();
     }
