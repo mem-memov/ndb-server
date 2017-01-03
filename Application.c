@@ -11,7 +11,7 @@ struct Application * Application_construct()
 
 
 
-	return Application;
+	return application;
 }
 
 void Application_destruct(struct Application * application)
@@ -33,7 +33,7 @@ int Application_execute(struct Application * application, char * request, int re
         dup2(fileDescriptors[1], 1);
         close(fileDescriptors[0]);
 
-        execlp("ndb");
+        execlp("ndb", "ndb", NULL);
 
         Error_afterApplicationExecuting();
     }
