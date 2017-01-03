@@ -103,3 +103,41 @@ void Error_afterConnectionSending(int sendResult)
         exit(1);
     }
 }
+
+void Error_afterServerForking(int processId)
+{
+    if (-1 == processId) {
+        fprintf(stderr, "Error after server creating a fork.\n");
+        exit(1);
+    }
+}
+
+void Error_afterApplicationCreatingPipe(int pipeResult)
+{
+    if (-1 == pipeResult) {
+        fprintf(stderr, "Error after application creates a pipe.\n");
+        exit(1);
+    }
+}
+
+void Error_afterApplicationForking(int processId)
+{
+    if (-1 == processId) {
+        fprintf(stderr, "Error after application creating a fork.\n");
+        exit(1);
+    }
+}
+
+void Error_afterApplicationExecuting()
+{
+    fprintf(stderr, "Error after application executing.\n");
+    exit(1);
+}
+
+void Error_whileApplicationResponding(int responseLength, int maxResponseLength)
+{
+    if (responseLength > maxResponseLength) {
+        fprintf(stderr, "Error while application responding. Response length violated.\n");
+        exit(1);
+    }
+}

@@ -23,4 +23,10 @@ void Error_afterListenerAcceptingConnection(int connectionDescriptor);
 void Error_whileConnectionReceiving(int availableBufferLength);
 void Error_afterConnectionSending(int sendResult);
 
+void Error_afterServerForking(int processId);
+
+void Error_afterApplicationCreatingPipe(int pipeResult);
+void Error_afterApplicationForking(int processId);
+void Error_whileApplicationResponding(int responseLength, int maxResponseLength;
+
 #endif

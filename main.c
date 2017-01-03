@@ -1,5 +1,6 @@
 #include "Server.h"
 #include "Signal.h"
+#include "Application.h"
 #include <stdlib.h>
 
 struct Server * server = NULL;
@@ -23,7 +24,9 @@ int main(int argc, char *argv[])
     int connectionLimit = 10;
     int bufferLength = 8192;
 
-    server = Server_construct(port, connectionLimit, bufferLength);
+    struct Application * application = Application_construct();
+
+    server = Server_construct(port, connectionLimit, bufferLength, application);
 
     Server_start(server);
 
