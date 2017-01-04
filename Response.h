@@ -12,4 +12,6 @@ void Response_destruct(struct Response * response);
 
 void Response_addNumber(struct Response * response, long int number);
 
+int Response_length(struct Response * response);
+
 #endif

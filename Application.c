@@ -51,6 +51,5 @@ int Application_execute(struct Application * application, char * request, int re
         ndb_connect(fromNodeId, toNodeId);
     }
 
-    int responseLength = 10;
-    return responseLength;
+    return Response_length(responseContainer);
 }

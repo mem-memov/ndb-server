@@ -11,7 +11,7 @@ struct Response * Response_construct(char * buffer, int maxResponseLength)
 
     response->buffer = buffer;
     memset(response->buffer, '\0', response->maxResponseLength);
-    strcat(response->buffer, "\n");
+    response->buffer[0] = '\n';
 
 
 	return response;
@@ -24,9 +24,24 @@ void Response_destruct(struct Response * response)
 
 void Response_addNumber(struct Response * response, long int number)
 {
-    response->buffer[strlen(response->buffer)] = '\0'; // remove new line
+    // remove new line
+    char *pos;
+    if ((pos=strchr(response->buffer, '\n')) != NULL) {
+        *pos = '\0';
+    }
+
     char addition[sizeof(long int) + 1];
     sprintf(addition, "%ld", number);
+    if (0 < strlen(response->buffer)) {
+        strcat(response->buffer, " ");
+    }
     strcat(response->buffer, addition);
-    strcat(response->buffer, "\n");
+
+    // append new line
+    response->buffer[strlen(response->buffer)] = '\n';
+}
+
+int Response_length(struct Response * response)
+{
+    return strlen(response->buffer);
 }
