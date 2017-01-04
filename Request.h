@@ -3,11 +3,18 @@
 
 struct Request {
     char * body;
+    int maxLength;
 };
 
-struct Request * Request_construct(char * body, int length);
+struct Request * Request_construct(int maxLength);
 
 void Request_destruct(struct Request * request);
+
+char * Request_body(struct Request * request);
+
+int Request_maxLength(struct Request * request);
+
+char Request_isFinished(struct Request * request);
 
 char Request_isCommand(struct Request * request, char * command);
 

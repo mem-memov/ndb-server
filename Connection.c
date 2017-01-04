@@ -1,4 +1,6 @@
 #include "Connection.h"
+#include "Request.h"
+#include "Response.h"
 #include "Error.h"
 #include <stdlib.h>
 #include <unistd.h>
@@ -22,29 +24,20 @@ void Connection_close(struct Connection * connection)
     close(connection->descriptor);
 }
 
-int Connection_receive(struct Connection * connection, char * buffer, int bufferLength)
+void Connection_receive(struct Connection * connection, struct Request * request)
 {
     int receivedLength;
-    int availableLength = bufferLength - 1;
-    int filledLength;
-    char lastCharacter;
+    int availableLength = Request_maxLength(request);
 
     do {
-        receivedLength = recv(connection->descriptor, buffer, availableLength, 0);
+        receivedLength = recv(connection->descriptor, Request_body(request), availableLength, 0);
         availableLength -= receivedLength;
         Error_whileConnectionReceiving(availableLength);
-        filledLength = bufferLength - availableLength - 1;
-        lastCharacter = buffer[filledLength - 1];
-    } while (receivedLength > 0 && lastCharacter != '\n');
-
-    buffer[filledLength] = '\0';
-    filledLength++;
-
-    return filledLength;
+    } while (receivedLength > 0 && 0 == Request_isFinished(request));
 }
 
-void Connection_send(struct Connection * connection, char * buffer, int bufferLength)
+void Connection_send(struct Connection * connection, struct Response * response)
 {
-    int sendResult = send(connection->descriptor, buffer, bufferLength, 0);
+    int sendResult = send(connection->descriptor, Response_body(response), Response_length(response), 0);
     Error_afterConnectionSending(sendResult);
 }

@@ -4,16 +4,18 @@
 
 #include <stdio.h>
 
-struct Request * Request_construct(char * body, int length)
+struct Request * Request_construct(int maxLength)
 {
 	struct Request * request = malloc(sizeof(struct Request));
 
-    if (body[length] != '\0') {
+    if (maxLength < 1) {
         // error: wrong format
     }
+    request->maxLength = maxLength;
 
-    request->body = malloc(length);
-    strcpy(request->body, body);
+    int realLength = request->maxLength + 1; // keep string end
+    request->body = malloc(realLength);
+    memset(request->body, '\0', realLength);
 
 	return request;
 }
@@ -22,6 +24,27 @@ void Request_destruct(struct Request * request)
 {
     free(request->body);
     free(request);
+}
+
+char * Request_body(struct Request * request)
+{
+    return request->body;
+}
+
+int Request_maxLength(struct Request * request)
+{
+    return request->maxLength;
+}
+
+char Request_isFinished(struct Request * request)
+{
+    char lastCharacter = request->body[strlen(request->body) - 1];
+
+    if ('\n' == lastCharacter) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 char Request_isCommand(struct Request * request, char * command)

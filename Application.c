@@ -21,18 +21,15 @@ void Application_destruct(struct Application * application)
     free(application);
 }
 
-int Application_execute(struct Application * application, char * request, int requestLength, char * response, int maxResponseLength)
+void Application_execute(struct Application * application, struct Request * request, struct Response * response)
 {
-    struct Request * requestContainer = Request_construct(request, requestLength);
-    struct Response * responseContainer = Response_construct(response, maxResponseLength);
-
-    if (1 == Request_isCommand(requestContainer, "create")) {
+    if (1 == Request_isCommand(request, "create")) {
         long int id = ndb_create();
-        Response_addNumber(responseContainer, id);
+        Response_addNumber(response, id);
     }
 
-    if (1 == Request_isCommand(requestContainer, "read")) {
-        long int nodeId = Request_getArgument(requestContainer, 1);
+    if (1 == Request_isCommand(request, "read")) {
+        long int nodeId = Request_getArgument(request, 1);
         int length = 4096;
         long int buffer[length];
         int offset = 0;
@@ -40,16 +37,14 @@ int Application_execute(struct Application * application, char * request, int re
 
         int i = 0;
         while (i < length && i < total) {
-            Response_addNumber(responseContainer, buffer[i]);
+            Response_addNumber(response, buffer[i]);
             i++;
         }
     }
 
-    if (1 == Request_isCommand(requestContainer, "connect")) {
-        long int fromNodeId = Request_getArgument(requestContainer, 1);
-        long int toNodeId = Request_getArgument(requestContainer, 2);
+    if (1 == Request_isCommand(request, "connect")) {
+        long int fromNodeId = Request_getArgument(request, 1);
+        long int toNodeId = Request_getArgument(request, 2);
         ndb_connect(fromNodeId, toNodeId);
     }
-
-    return Response_length(responseContainer);
 }

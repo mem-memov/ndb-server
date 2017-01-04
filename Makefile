@@ -4,13 +4,13 @@ ndb: main.o Server.o Listener.o Connection.o Error.o Signal.o Application.o Requ
 main.o: main.c Server.h
 	gcc -c main.c
 
-Server.o: Server.c Server.h Listener.h Connection.h Application.h
+Server.o: Server.c Server.h Listener.h Connection.h Request.h Response.h Application.h
 	gcc -c Server.c
 
 Listener.o: Listener.c Listener.h Connection.h Error.h
 	gcc -c Listener.c
 
-Connection.o: Connection.c Connection.h Error.h
+Connection.o: Connection.c Connection.h Request.h Response.h Error.h
 	gcc -c Connection.c
 
 Error.o: Error.c Error.h

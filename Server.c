@@ -1,6 +1,8 @@
 #include "Server.h"
 #include "Listener.h"
 #include "Connection.h"
+#include "Request.h"
+#include "Response.h"
 #include "Application.h"
 #include <stdlib.h>
 #include <unistd.h>
@@ -46,13 +48,12 @@ void Server_start(struct Server * server)
         if (0 == processId) { // child process code
             Listener_close(server->listener);
 
-            char request[server->bufferLength];
-            int requestLength = Connection_receive(connection, request, server->bufferLength);
+            struct Request * request = Request_construct(server->bufferLength);
+            Connection_receive(connection, request);
 
-            char response[server->bufferLength];
-            int responseLength = Application_execute(server->application, request, requestLength, response, server->bufferLength);
-
-            Connection_send(connection, response, responseLength);
+            struct Response * response = Response_construct(server->bufferLength);
+            Application_execute(server->application, request,response);
+            Connection_send(connection, response);
 
             Connection_close(connection);
             exit(0);
