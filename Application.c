@@ -1,10 +1,11 @@
 #include "Application.h"
+#include "Request.h"
+#include "Response.h"
 #include "Error.h"
 #include <ndb.h>
 #include <stdlib.h>
+
 #include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
 
 struct Application * Application_construct()
 {
@@ -22,38 +23,49 @@ void Application_destruct(struct Application * application)
 
 int Application_execute(struct Application * application, char * request, int requestLength, char * response, int maxResponseLength)
 {
-    int fileDescriptors[2];
+    struct Request * requestContainer = Request_construct(request, requestLength);
+    struct Response * responseContainer = Response_construct(response, maxResponseLength);
 
-    int pipeResult = pipe(fileDescriptors);
-    Error_afterApplicationCreatingPipe(pipeResult);
-
-    pid_t processId = fork();
-    Error_afterApplicationForking((int)processId);
-
-    if (0 == processId) { // child process code
-        dup2(fileDescriptors[1], 1);
-        close(fileDescriptors[0]);
-
-        ndb_create();
-
-        Error_afterApplicationExecuting();
+    if (1 == Request_isCommand(requestContainer, "create")) {
+        long int id = ndb_create();
     }
 
-    dup2(fileDescriptors[0], 0);
-    close(fileDescriptors[1]);
+    if (1 == Request_isCommand(requestContainer, "read")) {
+        printf("2");
+    }
 
-    int responseLength = 0;
-    char character;
-    do {
-        character = fgetc(stdin);
-        if(feof(stdin)) {
-            break ;
+    if (1 == Request_isCommand(requestContainer, "connect")) {
+        printf("3");
+    }
+
+/*
+    int numberCount = 0;
+    for (i = 0; i < requestLength; i++) {
+        if (request[i] = ' ') {
+            numberCount++;
         }
-        responseLength++;
-        Error_whileApplicationResponding(responseLength, maxResponseLength);
-        response[responseLength - 1] = character;
+    }
+    if (numberCount > 0) {
+        numberCount++;
+    }
 
-    } while (1);
+    long int numbers[numberCount];
 
+    if (0 == numberCount) {
+        long int id = ndb_create();
+    }
+
+    if (2 == numberCount) {
+        int length = 4096;
+        long int buffer[length];
+        int offset = 0;
+        long int total = ndb_read(1, buffer, length, offset);
+    }
+
+    if (3 == numberCount) {
+        ndb_connect(1, 3);
+    }
+*/
+    int responseLength = 10;
     return responseLength;
 }
