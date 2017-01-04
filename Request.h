@@ -11,4 +11,6 @@ void Request_destruct(struct Request * request);
 
 char Request_isCommand(struct Request * request, char * command);
 
+long int Request_getArgument(struct Request * request, int orderNumber);
+
 #endif
