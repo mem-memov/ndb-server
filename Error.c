@@ -129,6 +129,14 @@ void Error_whileApplicationResponding(int responseLength, int maxResponseLength)
     }
 }
 
+void Error_whileApplicationExecutingWithSmallBuffer(int bufferLength, long int total)
+{
+    if (bufferLength < total) {
+        fprintf(stderr, "Error while application executing. Buffer size %d is less than %ld.\n", bufferLength, total);
+        exit(1);
+    }
+}
+
 void Error_whileRequestConstructingWithMaxLength(int maxLength)
 {
     if (maxLength < 2) {

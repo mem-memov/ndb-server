@@ -30,13 +30,15 @@ void Application_execute(struct Application * application, struct Request * requ
 
     if (1 == Request_isCommand(request, "read")) {
         long int nodeId = Request_getArgument(request, 1);
-        int length = 4096;
-        long int buffer[length];
+        int bufferLength = 4096;
+        long int buffer[bufferLength];
         int offset = 0;
-        long int total = ndb_read(nodeId, buffer, length, offset);
+        long int total = ndb_read(nodeId, buffer, bufferLength, offset);
+
+        Error_whileApplicationExecutingWithSmallBuffer(bufferLength, total);
 
         int i = 0;
-        while (i < length && i < total) {
+        while (i < bufferLength && i < total) {
             Response_addNumber(response, buffer[i]);
             i++;
         }
