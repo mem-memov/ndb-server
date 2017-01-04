@@ -8,9 +8,7 @@ struct Request * Request_construct(int maxLength)
 {
 	struct Request * request = malloc(sizeof(struct Request));
 
-    if (maxLength < 1) {
-        // error: wrong format
-    }
+    Error_whileRequestConstructingWithMaxLength(maxLength)
     request->maxLength = maxLength;
 
     int realLength = request->maxLength + 1; // keep string end

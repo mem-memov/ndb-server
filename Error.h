@@ -29,4 +29,8 @@ void Error_afterApplicationCreatingPipe(int pipeResult);
 void Error_afterApplicationForking(int processId);
 void Error_whileApplicationResponding(int responseLength, int maxResponseLength);
 
+void Error_whileRequestConstructingWithMaxLength(int maxLength);
+
+void Error_whileResponseConstructingWithMaxLength(int maxLength);
+
 #endif

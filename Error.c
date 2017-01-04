@@ -141,3 +141,20 @@ void Error_whileApplicationResponding(int responseLength, int maxResponseLength)
         exit(1);
     }
 }
+
+void Error_whileRequestConstructingWithMaxLength(int maxLength)
+{
+    if (maxLength < 1) {
+        fprintf(stderr, "Error while constructing request. Maximum request length %d is too small.\n", maxLength);
+        exit(1);
+    }
+}
+
+
+void Error_whileResponseConstructingWithMaxLength(int maxLength)
+{
+    if (maxLength < 1) {
+        fprintf(stderr, "Error while constructing response. Maximum response length %d is too small.\n", maxLength);
+        exit(1);
+    }
+}

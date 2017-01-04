@@ -7,6 +7,7 @@ struct Response * Response_construct(int maxLength)
 {
 	struct Response * response = malloc(sizeof(struct Response));
 
+	Error_whileResponseConstructingWithMaxLength(maxLength);
     if (maxLength < 1) {
         // error: wrong format
     }
