@@ -24,6 +24,7 @@ void Error_whileRequestConstructingWithMaxLength(int maxLength);
 void Error_beforeRequestFinishedCheck(char endCharacter);
 void Error_beforeRequestCommandCheck(char endCharacter);
 void Error_beforeRequestGettingArgument(char endCharacter);
+void Error_afterRequestGettingArgument(char isFound, int orderNumber);
 
 void Error_whileResponseConstructingWithMaxLength(int maxLength);
 void Error_beforeResponseLength(char endCharacter);

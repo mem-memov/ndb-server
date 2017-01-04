@@ -161,6 +161,14 @@ void Error_beforeRequestGettingArgument(char endCharacter)
     }
 }
 
+void Error_afterRequestGettingArgument(char isFound, int orderNumber)
+{
+    if (0 == isFound) {
+        fprintf(stderr, "Error after geting request argument. Argument %d not found.\n", orderNumber);
+        exit(1);
+    }
+}
+
 void Error_whileResponseConstructingWithMaxLength(int maxLength)
 {
     if (maxLength < 2) {

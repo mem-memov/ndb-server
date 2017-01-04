@@ -71,6 +71,7 @@ long int Request_getArgument(struct Request * request, int orderNumber)
     int requestLength = strlen(request->body) + 1;
     int argumentLength = sizeof(long int) + 1;
     char argument[argumentLength];
+    char isFound = 0;
     char argumentIndex = 0;
     int i;
 
@@ -85,6 +86,7 @@ long int Request_getArgument(struct Request * request, int orderNumber)
             memset(argument, '\0', argumentLength);
         } else {
             if (wordCount == orderNumber) {
+                isFound = 1;
                 argument[argumentIndex] = character;
                 argument[argumentIndex + 1] = '\0';
                 argumentIndex++;
@@ -94,6 +96,8 @@ long int Request_getArgument(struct Request * request, int orderNumber)
             }
         }
     }
+
+    Error_afterRequestGettingArgument(isFound, orderNumber);
 
     return strtol(argument, NULL, 10);
 }
