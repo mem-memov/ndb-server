@@ -1,5 +1,7 @@
 #include "Listener.h"
 #include "Connection.h"
+#include "Request.h"
+#include "Response.h"
 #include "Error.h"
 #include <stdlib.h>
 #include <sys/socket.h>
@@ -60,7 +62,7 @@ void Listener_listen(struct Listener * listener)
     Error_afterListenerListening(listenResult);
 }
 
-struct Connection * Listener_accept(struct Listener * listener)
+struct Connection * Listener_accept(struct Listener * listener, int bufferLength)
 {
     Error_beforeListenerAcceptingConnection(listener->descriptor);
 
@@ -70,7 +72,9 @@ struct Connection * Listener_accept(struct Listener * listener)
 
     Error_afterListenerAcceptingConnection(connectionDescriptor);
 
-    struct Connection * connection = Connection_construct(connectionDescriptor);
+    struct Request * request = Request_construct(bufferLength);
+    struct Response * response = Response_construct(bufferLength);
+    struct Connection * connection = Connection_construct(connectionDescriptor, request, response);
 
     return connection;
 }

@@ -1,15 +1,6 @@
 #ifndef ERROR_HEADER
 #define ERROR_HEADER
 
-struct Error {
-    char * message;
-    int code;
-};
-
-struct Error * Error_construct(char * message, int code);
-
-void Error_destruct(struct Error * error);
-
 void Error_beforeListenerOpeningSocket(int listenerDescriptor);
 void Error_afterListenerOpeningSocket(int listenerDescriptor);
 void Error_beforeListenerBindingToPort(int listenerDescriptor);
@@ -30,7 +21,12 @@ void Error_afterApplicationForking(int processId);
 void Error_whileApplicationResponding(int responseLength, int maxResponseLength);
 
 void Error_whileRequestConstructingWithMaxLength(int maxLength);
+void Error_beforeRequestFinishedCheck(char endCharacter);
+void Error_beforeRequestCommandCheck(char endCharacter);
+void Error_beforeRequestGettingArgument(char endCharacter);
 
 void Error_whileResponseConstructingWithMaxLength(int maxLength);
+void Error_beforeResponseLength(char endCharacter);
+void Error_beforeResponseAddingNumber(char endCharacter);
 
 #endif

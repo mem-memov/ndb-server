@@ -13,9 +13,8 @@ struct Response * Response_construct(int maxLength)
     }
 	response->maxLength = maxLength;
 
-    int realLength = response->maxLength + 1; // keep string end
-    response->body = malloc(realLength);
-    memset(response->body, '\0', realLength);
+    response->body = malloc(response->maxLength);
+    Response_clean(response);
 
 	return response;
 }
@@ -33,11 +32,21 @@ char * Response_body(struct Response * response)
 
 int Response_length(struct Response * response)
 {
+    Error_beforeResponseLength(response->body[response->maxLength]);
+
     return strlen(response->body);
+}
+
+void Response_clean(struct Response * response)
+{
+    memset(response->body, '\0', response->maxLength);
+    response->body[0] = '\n';
 }
 
 void Response_addNumber(struct Response * response, long int number)
 {
+    Error_beforeResponseAddingNumber(response->body[response->maxLength]);
+
     // remove new line
     char *pos;
     if ((pos=strchr(response->body, '\n')) != NULL) {

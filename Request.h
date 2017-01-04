@@ -12,6 +12,8 @@ void Request_destruct(struct Request * request);
 
 char * Request_body(struct Request * request);
 
+void Request_clean(struct Request * request);
+
 int Request_maxLength(struct Request * request);
 
 char Request_isFinished(struct Request * request);

@@ -19,7 +19,7 @@ void Listener_bind(struct Listener * listener);
 
 void Listener_listen(struct Listener * listener);
 
-struct Connection * Listener_accept(struct Listener * listener);
+struct Connection * Listener_accept(struct Listener * listener, int bufferLength);
 
 void Listener_close(struct Listener * listener);
 

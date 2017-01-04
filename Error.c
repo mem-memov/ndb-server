@@ -3,19 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 
-struct Error * Error_construct(char * message, int code)
-{
-	struct Error * error = malloc(sizeof(struct Error));
-
-	return error;
-}
-
-void Error_destruct(struct Error * error)
-{
-    free(error->message);
-    free(error);
-}
-
 void Error_beforeListenerOpeningSocket(int listenerDescriptor)
 {
     if (0 <= listenerDescriptor) {
@@ -144,17 +131,56 @@ void Error_whileApplicationResponding(int responseLength, int maxResponseLength)
 
 void Error_whileRequestConstructingWithMaxLength(int maxLength)
 {
-    if (maxLength < 1) {
+    if (maxLength < 2) {
         fprintf(stderr, "Error while constructing request. Maximum request length %d is too small.\n", maxLength);
         exit(1);
     }
 }
 
+void Error_beforeRequestFinishedCheck(char endCharacter)
+{
+    if ('\0' != endCharacter) {
+        fprintf(stderr, "Error while checking request is finished. Request body overflow.\n");
+        exit(1);
+    }
+}
+
+void Error_beforeRequestCommandCheck(char endCharacter)
+{
+    if ('\0' != endCharacter) {
+        fprintf(stderr, "Error while testing request for command. Request body overflow.\n");
+        exit(1);
+    }
+}
+
+void Error_beforeRequestGettingArgument(char endCharacter)
+{
+    if ('\0' != endCharacter) {
+        fprintf(stderr, "Error before geting request argument. Request body overflow.\n");
+        exit(1);
+    }
+}
 
 void Error_whileResponseConstructingWithMaxLength(int maxLength)
 {
-    if (maxLength < 1) {
+    if (maxLength < 2) {
         fprintf(stderr, "Error while constructing response. Maximum response length %d is too small.\n", maxLength);
+        exit(1);
+    }
+}
+
+void Error_beforeResponseLength(char endCharacter)
+{
+    if ('\0' != endCharacter) {
+        fprintf(stderr, "Error before geting response length. Resopnse body overflow.\n");
+        exit(1);
+    }
+}
+
+void Error_beforeResponseAddingNumber(char endCharacter)
+{
+    if ('\0' != endCharacter) {
+        fprintf(stderr, "Error before response adding number. Resopnse body overflow.\n");
         exit(1);
     }
 }

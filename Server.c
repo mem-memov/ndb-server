@@ -40,7 +40,7 @@ void Server_start(struct Server * server)
     Listener_listen(server->listener);
 
     while (1) {
-        struct Connection * connection = Listener_accept(server->listener);
+        struct Connection * connection = Listener_accept(server->listener, server->bufferLength);
 
         pid_t processId = fork();
         Error_afterServerForking((int)processId);
@@ -48,16 +48,19 @@ void Server_start(struct Server * server)
         if (0 == processId) { // child process code
             Listener_close(server->listener);
 
-            struct Request * request = Request_construct(server->bufferLength);
-            Connection_receive(connection, request);
+            while (1) {
+                Connection_receive(connection);
 
-            struct Response * response = Response_construct(server->bufferLength);
-            Application_execute(server->application, request,response);
-            Connection_send(connection, response);
+                if (1 == Connection_mustClose(connection)) {
+                    Connection_close(connection);
+                    exit(0);
+                }
 
-            Connection_close(connection);
-            exit(0);
+                Application_execute(server->application, Connection_request(connection), Connection_response(connection));
+                Connection_send(connection);
+            }
         }
+
         Connection_close(connection);
     }
 }

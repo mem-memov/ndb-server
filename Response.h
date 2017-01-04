@@ -14,6 +14,8 @@ char * Response_body(struct Response * response);
 
 int Response_length(struct Response * response);
 
+void Response_clean(struct Response * response);
+
 void Response_addNumber(struct Response * response, long int number);
 
 #endif
