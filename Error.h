@@ -16,9 +16,6 @@ void Error_afterConnectionSending(int sendResult);
 
 void Error_afterServerForking(int processId);
 
-void Error_afterApplicationCreatingPipe(int pipeResult);
-void Error_afterApplicationForking(int processId);
-void Error_whileApplicationResponding(int responseLength, int maxResponseLength);
 void Error_whileApplicationExecutingWithSmallBuffer(int bufferLength, long int total);
 
 void Error_whileRequestConstructingWithMaxLength(int maxLength);
