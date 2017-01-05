@@ -30,8 +30,7 @@ static void Application_read(struct Application * application, struct Request * 
     long int nodeId = Request_getArgument(request, 1);
     int bufferLength = 4096;
     long int buffer[bufferLength];
-    int offset = 0;
-    long int total = ndb_read(nodeId, buffer, bufferLength, offset);
+    long int total = ndb_read(nodeId, buffer, bufferLength);
 
     Error_whileApplicationExecutingWithSmallBuffer(bufferLength, total);
 
