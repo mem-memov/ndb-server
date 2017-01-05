@@ -8,9 +8,6 @@ struct Response * Response_construct(int maxLength)
 	struct Response * response = malloc(sizeof(struct Response));
 
 	Error_inResponseWhileConstructingWithMaxLength(maxLength);
-    if (maxLength < 1) {
-        // error: wrong format
-    }
 	response->maxLength = maxLength;
 
     response->body = malloc(response->maxLength);
