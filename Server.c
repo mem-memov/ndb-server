@@ -43,7 +43,7 @@ void Server_start(struct Server * server)
         struct Connection * connection = Listener_accept(server->listener, server->bufferLength);
 
         pid_t processId = fork();
-        Error_afterServerForking((int)processId);
+        Error_inServerAfterForking((int)processId);
 
         if (0 == processId) { // child process code
             Listener_close(server->listener);

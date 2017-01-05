@@ -8,7 +8,7 @@ struct Request * Request_construct(int maxLength)
 {
 	struct Request * request = malloc(sizeof(struct Request));
 
-    Error_whileRequestConstructingWithMaxLength(maxLength);
+    Error_inRequestWhileConstructingWithMaxLength(maxLength);
     request->maxLength = maxLength;
 
     request->body = malloc(request->maxLength);
@@ -40,7 +40,7 @@ void Request_clean(struct Request * request)
 
 char Request_isFinished(struct Request * request)
 {
-    Error_beforeRequestFinishedCheck(request->body[request->maxLength]);
+    Error_inRequestBeforeFinishedCheck(request->body[request->maxLength]);
 
     char lastCharacter = request->body[strlen(request->body) - 1];
 
@@ -53,7 +53,7 @@ char Request_isFinished(struct Request * request)
 
 char Request_isCommand(struct Request * request, char * command)
 {
-    Error_beforeRequestCommandCheck(request->body[request->maxLength]);
+    Error_inRequestBeforeCommandCheck(request->body[request->maxLength]);
 
     if (strstr(request->body, command) == request->body) {
         return 1;
@@ -64,7 +64,7 @@ char Request_isCommand(struct Request * request, char * command)
 
 long int Request_getArgument(struct Request * request, int orderNumber)
 {
-    Error_beforeRequestGettingArgument(request->body[request->maxLength]);
+    Error_inRequestBeforeGettingArgument(request->body[request->maxLength]);
 
     int wordCount = 0;
     char character;
@@ -97,7 +97,7 @@ long int Request_getArgument(struct Request * request, int orderNumber)
         }
     }
 
-    Error_afterRequestGettingArgument(isFound, orderNumber);
+    Error_inRequestAfterGettingArgument(isFound, orderNumber);
 
     return strtol(argument, NULL, 10);
 }

@@ -7,7 +7,7 @@ struct Response * Response_construct(int maxLength)
 {
 	struct Response * response = malloc(sizeof(struct Response));
 
-	Error_whileResponseConstructingWithMaxLength(maxLength);
+	Error_inResponseWhileConstructingWithMaxLength(maxLength);
     if (maxLength < 1) {
         // error: wrong format
     }
@@ -32,7 +32,7 @@ char * Response_body(struct Response * response)
 
 int Response_length(struct Response * response)
 {
-    Error_beforeResponseLength(response->body[response->maxLength]);
+    Error_inResponseBeforeLength(response->body[response->maxLength]);
 
     return strlen(response->body);
 }
@@ -45,7 +45,7 @@ void Response_clean(struct Response * response)
 
 void Response_addNumber(struct Response * response, long int number)
 {
-    Error_beforeResponseAddingNumber(response->body[response->maxLength]);
+    Error_inResponseBeforeAddingNumber(response->body[response->maxLength]);
 
     // remove new line
     char *pos;

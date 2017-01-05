@@ -32,7 +32,7 @@ static void Application_read(struct Application * application, struct Request * 
     long int buffer[bufferLength];
     long int total = ndb_read(nodeId, buffer, bufferLength);
 
-    Error_whileApplicationExecutingWithSmallBuffer(bufferLength, total);
+    Error_inApplicationWhileExecutingWithSmallBuffer(bufferLength, total);
 
     int i = 0;
     while (i < bufferLength && i < total) {
@@ -57,6 +57,6 @@ void Application_execute(struct Application * application, struct Request * requ
     } else if (1 == Request_isCommand(request, "connect")) {
         Application_connect(application, request, response);
     } else {
-        Error_whileApplicationExecutingWithUnknownCommand();
+        Error_inApplicationWhileExecutingWithUnknownCommand();
     }
 }

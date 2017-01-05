@@ -1,32 +1,32 @@
 #ifndef ERROR_HEADER
 #define ERROR_HEADER
 
-void Error_beforeListenerOpeningSocket(int listenerDescriptor);
-void Error_afterListenerOpeningSocket(int listenerDescriptor);
-void Error_beforeListenerBindingToPort(int listenerDescriptor);
-void Error_afterListenerSettingSocketOption(int setSocketOptionResult);
-void Error_afterListenerBindingToPort(int bindResult);
-void Error_beforeListenerListening(int listenerDescriptor);
-void Error_afterListenerListening(int listenResult);
-void Error_beforeListenerAcceptingConnection(int listenerDescriptor);
-void Error_afterListenerAcceptingConnection(int connectionDescriptor);
+void Error_inApplicationWhileExecutingWithSmallBuffer(int bufferLength, long int total);
+void Error_inApplicationWhileExecutingWithUnknownCommand();
 
-void Error_whileConnectionReceiving(int availableBufferLength);
-void Error_afterConnectionSending(int sendResult);
+void Error_inConnectionWhileReceiving(int availableBufferLength);
+void Error_inConnectionAfterSending(int sendResult);
 
-void Error_afterServerForking(int processId);
+void Error_inListenerBeforeOpeningSocket(int listenerDescriptor);
+void Error_inListenerAfterOpeningSocket(int listenerDescriptor);
+void Error_inListenerBeforeBindingToPort(int listenerDescriptor);
+void Error_inListenerAfterSettingSocketOption(int setSocketOptionResult);
+void Error_inListenerAfterBindingToPort(int bindResult);
+void Error_inListenerBeforeListening(int listenerDescriptor);
+void Error_inListenerAfterListening(int listenResult);
+void Error_inListenerBeforeAcceptingConnection(int listenerDescriptor);
+void Error_inListenerAfterAcceptingConnection(int connectionDescriptor);
 
-void Error_whileApplicationExecutingWithSmallBuffer(int bufferLength, long int total);
-void Error_whileApplicationExecutingWithUnknownCommand();
+void Error_inRequestWhileConstructingWithMaxLength(int maxLength);
+void Error_inRequestBeforeFinishedCheck(char endCharacter);
+void Error_inRequestBeforeCommandCheck(char endCharacter);
+void Error_inRequestBeforeGettingArgument(char endCharacter);
+void Error_inRequestAfterGettingArgument(char isFound, int orderNumber);
 
-void Error_whileRequestConstructingWithMaxLength(int maxLength);
-void Error_beforeRequestFinishedCheck(char endCharacter);
-void Error_beforeRequestCommandCheck(char endCharacter);
-void Error_beforeRequestGettingArgument(char endCharacter);
-void Error_afterRequestGettingArgument(char isFound, int orderNumber);
+void Error_inResponseWhileConstructingWithMaxLength(int maxLength);
+void Error_inResponseBeforeLength(char endCharacter);
+void Error_inResponseBeforeAddingNumber(char endCharacter);
 
-void Error_whileResponseConstructingWithMaxLength(int maxLength);
-void Error_beforeResponseLength(char endCharacter);
-void Error_beforeResponseAddingNumber(char endCharacter);
+void Error_inServerAfterForking(int processId);
 
 #endif

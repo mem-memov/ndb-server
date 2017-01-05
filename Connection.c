@@ -49,14 +49,14 @@ void Connection_receive(struct Connection * connection)
     do {
         receivedLength = recv(connection->descriptor, Request_body(connection->request), availableLength, 0);
         availableLength -= receivedLength;
-        Error_whileConnectionReceiving(availableLength);
+        Error_inConnectionWhileReceiving(availableLength);
     } while (receivedLength > 0 && 0 == Request_isFinished(connection->request));
 }
 
 void Connection_send(struct Connection * connection)
 {
     int sendResult = send(connection->descriptor, Response_body(connection->response), Response_length(connection->response), 0);
-    Error_afterConnectionSending(sendResult);
+    Error_inConnectionAfterSending(sendResult);
 
     Request_clean(connection->request);
     Response_clean(connection->response);

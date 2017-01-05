@@ -26,22 +26,22 @@ void Listener_destruct(struct Listener * listener)
 
 void Listener_open(struct Listener * listener)
 {
-    Error_beforeListenerOpeningSocket(listener->descriptor);
+    Error_inListenerBeforeOpeningSocket(listener->descriptor);
 
     listener->descriptor = socket(PF_INET, SOCK_STREAM, 0);
 
-    Error_afterListenerOpeningSocket(listener->descriptor);
+    Error_inListenerAfterOpeningSocket(listener->descriptor);
 }
 
 void Listener_bind(struct Listener * listener)
 {
-    Error_beforeListenerBindingToPort(listener->descriptor);
+    Error_inListenerBeforeBindingToPort(listener->descriptor);
 
     int reuse = 1;
 
     int setSocketOptionResult = setsockopt(listener->descriptor, SOL_SOCKET, SO_REUSEADDR, (char *)&reuse, sizeof(int));
 
-    Error_afterListenerSettingSocketOption(setSocketOptionResult);
+    Error_inListenerAfterSettingSocketOption(setSocketOptionResult);
 
     struct sockaddr_in name;
     name.sin_family = PF_INET;
@@ -50,27 +50,27 @@ void Listener_bind(struct Listener * listener)
 
     int bindResult = bind(listener->descriptor, (struct sockaddr *)&name, sizeof(name));
 
-    Error_afterListenerBindingToPort(bindResult);
+    Error_inListenerAfterBindingToPort(bindResult);
 }
 
 void Listener_listen(struct Listener * listener)
 {
-    Error_beforeListenerListening(listener->descriptor);
+    Error_inListenerBeforeListening(listener->descriptor);
 
     int listenResult = listen(listener->descriptor, listener->connectionLimit);
 
-    Error_afterListenerListening(listenResult);
+    Error_inListenerAfterListening(listenResult);
 }
 
 struct Connection * Listener_accept(struct Listener * listener, int bufferLength)
 {
-    Error_beforeListenerAcceptingConnection(listener->descriptor);
+    Error_inListenerBeforeAcceptingConnection(listener->descriptor);
 
     struct sockaddr_storage clientAddress;
     unsigned int clientAddressSize = sizeof(clientAddress);
     int connectionDescriptor = accept(listener->descriptor, (struct sockaddr *)&clientAddress, &clientAddressSize);
 
-    Error_afterListenerAcceptingConnection(connectionDescriptor);
+    Error_inListenerAfterAcceptingConnection(connectionDescriptor);
 
     struct Request * request = Request_construct(bufferLength);
     struct Response * response = Response_construct(bufferLength);
