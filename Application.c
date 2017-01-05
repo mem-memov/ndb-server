@@ -56,5 +56,7 @@ void Application_execute(struct Application * application, struct Request * requ
         Application_read(application, request, response);
     } else if (1 == Request_isCommand(request, "connect")) {
         Application_connect(application, request, response);
+    } else {
+        Error_whileApplicationExecutingWithUnknownCommand();
     }
 }

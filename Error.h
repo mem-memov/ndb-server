@@ -17,6 +17,7 @@ void Error_afterConnectionSending(int sendResult);
 void Error_afterServerForking(int processId);
 
 void Error_whileApplicationExecutingWithSmallBuffer(int bufferLength, long int total);
+void Error_whileApplicationExecutingWithUnknownCommand();
 
 void Error_whileRequestConstructingWithMaxLength(int maxLength);
 void Error_beforeRequestFinishedCheck(char endCharacter);

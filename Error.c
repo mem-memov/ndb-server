@@ -107,6 +107,12 @@ void Error_whileApplicationExecutingWithSmallBuffer(int bufferLength, long int t
     }
 }
 
+void Error_whileApplicationExecutingWithUnknownCommand()
+{
+    fprintf(stderr, "Error while application executing. Command not known.\n");
+    exit(1);
+}
+
 void Error_whileRequestConstructingWithMaxLength(int maxLength)
 {
     if (maxLength < 2) {
