@@ -50,7 +50,8 @@ void Connection_receive(struct Connection * connection)
         receivedLength = recv(connection->descriptor, Request_body(connection->request), availableLength, 0);
         availableLength -= receivedLength;
         Error_inConnectionWhileReceiving(availableLength);
-    } while (receivedLength > 0 && 0 == Request_isFinished(connection->request));
+    }
+    while (receivedLength > 0 && 0 == Request_isFinished(connection->request));
 }
 
 void Connection_send(struct Connection * connection)
@@ -64,9 +65,12 @@ void Connection_send(struct Connection * connection)
 
 char Connection_mustClose(struct Connection * connection)
 {
-    if (1 == Request_isCommand(connection->request, "exit")) {
+    if (1 == Request_isCommand(connection->request, "exit"))
+    {
         return 1;
-    } else {
+    }
+    else
+    {
         return 0;
     }
 }

@@ -35,7 +35,8 @@ static void Application_read(struct Application * application, struct Request * 
     Error_inApplicationWhileExecutingWithSmallBuffer(bufferLength, total);
 
     int i = 0;
-    while (i < bufferLength && i < total) {
+    while (i < bufferLength && i < total)
+    {
         Response_addNumber(response, buffer[i]);
         i++;
     }
@@ -50,13 +51,20 @@ static void Application_connect(struct Application * application, struct Request
 
 void Application_execute(struct Application * application, struct Request * request, struct Response * response)
 {
-    if (1 == Request_isCommand(request, "create")) {
+    if (1 == Request_isCommand(request, "create"))
+    {
         Application_create(application, request, response);
-    } else if (1 == Request_isCommand(request, "read")) {
+    }
+    else if (1 == Request_isCommand(request, "read"))
+    {
         Application_read(application, request, response);
-    } else if (1 == Request_isCommand(request, "connect")) {
+    }
+    else if (1 == Request_isCommand(request, "connect"))
+    {
         Application_connect(application, request, response);
-    } else {
+    }
+    else
+    {
         Error_inApplicationWhileExecutingWithUnknownCommand();
     }
 }

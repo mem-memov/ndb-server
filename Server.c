@@ -24,7 +24,8 @@ struct Server * Server_construct(int port, int connectionLimit, int bufferLength
 
 void Server_destruct(struct Server * server)
 {
-    if (NULL != server->listener) {
+    if (NULL != server->listener)
+    {
         Listener_destruct(server->listener);
     }
 
@@ -39,19 +40,22 @@ void Server_start(struct Server * server)
     Listener_bind(server->listener);
     Listener_listen(server->listener);
 
-    while (1) {
+    while (1)
+    {
         struct Connection * connection = Listener_accept(server->listener, server->bufferLength);
 
         pid_t processId = fork();
         Error_inServerAfterForking((int)processId);
 
-        if (0 == processId) { // child process code
+        if (0 == processId)
+        { // child process code
             Listener_close(server->listener);
 
             while (1) {
                 Connection_receive(connection);
 
-                if (1 == Connection_mustClose(connection)) {
+                if (1 == Connection_mustClose(connection))
+                {
                     Connection_close(connection);
                     exit(0);
                 }
@@ -67,7 +71,8 @@ void Server_start(struct Server * server)
 
 void Server_stop(struct Server * server)
 {
-    if (NULL != server->listener) {
+    if (NULL != server->listener)
+    {
         Listener_close(server->listener);
     }
 }

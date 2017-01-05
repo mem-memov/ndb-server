@@ -49,15 +49,19 @@ void Response_addNumber(struct Response * response, long int number)
 
     // remove new line
     char *pos;
-    if ((pos=strchr(response->body, '\n')) != NULL) {
+    if ((pos=strchr(response->body, '\n')) != NULL)
+    {
         *pos = '\0';
     }
 
     char addition[sizeof(long int) + 1];
     sprintf(addition, "%ld", number);
-    if (0 < strlen(response->body)) {
+
+    if (0 < strlen(response->body))
+    {
         strcat(response->body, " ");
     }
+
     strcat(response->body, addition);
 
     // append new line

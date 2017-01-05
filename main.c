@@ -7,7 +7,8 @@ struct Server * server = NULL;
 
 void handleShutDown()
 {
-    if (NULL != server) {
+    if (NULL != server)
+    {
         Server_stop(server);
         Server_destruct(server);
     }

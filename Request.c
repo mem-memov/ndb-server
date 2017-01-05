@@ -44,9 +44,12 @@ char Request_isFinished(struct Request * request)
 
     char lastCharacter = request->body[strlen(request->body) - 1];
 
-    if ('\n' == lastCharacter) {
+    if ('\n' == lastCharacter)
+    {
         return 1;
-    } else {
+    }
+    else
+    {
         return 0;
     }
 }
@@ -55,9 +58,12 @@ char Request_isCommand(struct Request * request, char * command)
 {
     Error_inRequestBeforeCommandCheck(request->body[request->maxLength]);
 
-    if (strstr(request->body, command) == request->body) {
+    if (strstr(request->body, command) == request->body)
+    {
         return 1;
-    } else {
+    }
+    else
+    {
         return 0;
     }
 }
@@ -75,22 +81,32 @@ long int Request_getArgument(struct Request * request, int orderNumber)
     char argumentIndex = 0;
     int i;
 
-    for (i = 0; i < requestLength; i++) {
+    for (i = 0; i < requestLength; i++)
+    {
         character = request->body[i];
-        if (' ' == character) {
-            if (wordCount == orderNumber) {
+
+        if (' ' == character)
+        {
+            if (wordCount == orderNumber)
+            {
                 break;
             }
+
             wordCount++;
             argumentIndex = 0;
             memset(argument, '\0', argumentLength);
-        } else {
-            if (wordCount == orderNumber) {
+        }
+        else
+        {
+            if (wordCount == orderNumber)
+            {
                 isFound = 1;
                 argument[argumentIndex] = character;
                 argument[argumentIndex + 1] = '\0';
                 argumentIndex++;
-                if ((argumentLength - 2) == argumentIndex) {
+
+                if ((argumentLength - 2) == argumentIndex)
+                {
                     break;
                 }
             }
