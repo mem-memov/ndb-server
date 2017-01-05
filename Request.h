@@ -22,4 +22,6 @@ char Request_isCommand(struct Request * request, char * command);
 
 long int Request_getArgument(struct Request * request, int orderNumber);
 
+long int Request_countArguments(struct Request * request);
+
 #endif

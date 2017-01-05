@@ -5,8 +5,6 @@
 #include <ndb.h>
 #include <stdlib.h>
 
-#include <stdio.h>
-
 struct Application * Application_construct()
 {
 	struct Application * application = malloc(sizeof(struct Application));
@@ -49,6 +47,28 @@ static void Application_connect(struct Application * application, struct Request
     ndb_connect(fromNodeId, toNodeId);
 }
 
+static void Application_intersect(struct Application * application, struct Request * request, struct Response * response)
+{
+    long int nodeCount = Request_countArguments(request);
+    long int nodeIds[nodeCount];
+    long int n;
+    for (n = 0; n < nodeCount; n++) {
+        nodeIds[n] = Request_getArgument(request, n+1);
+    }
+    int bufferLength = 4096;
+    long int buffer[bufferLength];
+    long int total = ndb_intersect(nodeIds, nodeCount, buffer, bufferLength);
+
+    Error_inApplicationWhileExecutingWithSmallBuffer(bufferLength, total);
+
+    int i = 0;
+    while (i < bufferLength && i < total)
+    {
+        Response_addNumber(response, buffer[i]);
+        i++;
+    }
+}
+
 void Application_execute(struct Application * application, struct Request * request, struct Response * response)
 {
     if (1 == Request_isCommand(request, "create"))
@@ -62,6 +82,10 @@ void Application_execute(struct Application * application, struct Request * requ
     else if (1 == Request_isCommand(request, "connect"))
     {
         Application_connect(application, request, response);
+    }
+    else if (1 == Request_isCommand(request, "intersect"))
+    {
+        Application_intersect(application, request, response);
     }
     else
     {

@@ -118,4 +118,25 @@ long int Request_getArgument(struct Request * request, int orderNumber)
     return strtol(argument, NULL, 10);
 }
 
+long int Request_countArguments(struct Request * request)
+{
+    Error_inRequestBeforeGettingArgument(request->body[request->maxLength]);
+
+    int count = 0;
+    char character;
+    int requestLength = strlen(request->body) + 1;
+    int i;
+    for (i = 0; i < requestLength; i++)
+    {
+        character = request->body[i];
+
+        if (' ' == character)
+        {
+            count++;
+        }
+    }
+
+    return count;
+}
+
 
