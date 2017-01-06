@@ -50,3 +50,10 @@ u@upc ~ $
 ```
 
 To stop the server you can press the combination of keys Ctrl+C.
+
+To work with multiple databases start the server in different directiories with different port numbers:
+```
+cd ~/userdb
+ndb-server 4444
+
+```
