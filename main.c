@@ -22,6 +22,11 @@ int main(int argc, char *argv[])
     Signal_catch(sigint);
 
     int port = 43152;
+    if (2 == argc)
+    {
+        port = (int)strtol(argv[1], NULL, 10);
+    }
+
     int connectionLimit = 10;
     int bufferLength = 8192;
 
