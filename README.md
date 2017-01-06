@@ -14,6 +14,11 @@ make
 sudo make install
 ```
 
+To uninstall run:
+```
+sudo make uninstall
+```
+
 ### Usage
 
 Start the server in the directory where you are going to keep the data file.
@@ -22,6 +27,29 @@ Start the server in the directory where you are going to keep the data file.
 cd ~
 ndb-server
 ```
+This command brings some help information to your screen:
+
+```
+Node Database Server is running:
+ port(1): 43152.
+ maximum connections(2): 10
+ buffer size(3): 8192 bytes
+Commands:
+ create
+ read my_id
+ connect my_from_id my_to_id
+ intersect my_id_1 my_id_2 ...
+ union my_id_1 my_id_2 ...
+ difference my_id_1 my_id_2 ...
+ insiders my_container_id my_id_1 my_id_2 ...
+ outsiders my_container_id my_id_1 my_id_2 ...
+ exit
+Source code: https://github.com/mem-memov/ndb-server
+Press Ctrl+C to stop this server.
+
+```
+
+As you can see you can tweak some parameters. Pass them as arguments. Argument positions are given in parentesis.
 
 Open a new terminal and start telnet.
 
