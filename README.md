@@ -4,7 +4,7 @@ The database server gives you the ability to store a graph of connected nodes.
 
 ### Installation
 
-First you need to instal the [ndb](https://github.com/mem-memov/ndb#ndb) library.
+First you need to instal the [ndb](https://github.com/mem-memov/ndb#ndb) library. Then procceed as follows:
 
 ```
 cd repos/
