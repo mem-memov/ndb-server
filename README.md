@@ -27,7 +27,7 @@ Start the server in the directory where you are going to keep the data file.
 cd ~
 ndb-server
 ```
-This command brings some help information to your screen:
+This command brings some help information to your screen as well:
 
 ```
 Node Database Server is running:
