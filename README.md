@@ -49,4 +49,4 @@ Connection closed by foreign host.
 u@upc ~ $ 
 ```
 
-To stop the server one can press the combination of keys Ctrl+C.
+To stop the server you can press the combination of keys Ctrl+C.
