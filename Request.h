@@ -24,4 +24,6 @@ long int Request_getArgument(struct Request * request, int orderNumber);
 
 long int Request_countArguments(struct Request * request);
 
+void Request_getArguments(struct Request * request, long int * arguments, long int length);
+
 #endif

@@ -18,6 +18,15 @@ void Error_inApplicationWhileExecutingWithUnknownCommand()
     exit(1);
 }
 
+void Error_inApplicationWhileExecutingWithFewArguments(long int actual, char minimum)
+{
+    if (actual < minimum)
+    {
+        fprintf(stderr, "Error_inApplicationWhileExecutingWithFewArguments: minimum %c, given %ld.\n", minimum, actual);
+        exit(1);
+    }
+}
+
 void Error_inConnectionWhileReceiving(int availableBufferLength)
 {
     if (0 > availableBufferLength)
@@ -158,6 +167,15 @@ void Error_inRequestAfterGettingArgument(char isFound, int orderNumber)
     if (0 == isFound)
     {
         fprintf(stderr, "Error_inRequestAfterGettingArgument: argument %d not found.\n", orderNumber);
+        exit(1);
+    }
+}
+
+void Error_inRequestBeforeGettingArguments(char endCharacter)
+{
+    if ('\0' != endCharacter)
+    {
+        fprintf(stderr, "Error_inRequestBeforeGettingArguments: request body overflow.\n");
         exit(1);
     }
 }

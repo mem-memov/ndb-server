@@ -18,4 +18,6 @@ void Response_clean(struct Response * response);
 
 void Response_addNumber(struct Response * response, long int number);
 
+void Response_addNumbers(struct Response * response, long int * buffer, long int bufferLength, long int total);
+
 #endif

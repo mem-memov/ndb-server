@@ -5,10 +5,10 @@
 #include "Response.h"
 
 struct Application {
-
+    int bufferLength;
 };
 
-struct Application * Application_construct();
+struct Application * Application_construct(int bufferLength);
 
 void Application_destruct(struct Application * application);
 

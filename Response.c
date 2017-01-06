@@ -64,3 +64,13 @@ void Response_addNumber(struct Response * response, long int number)
     // append new line
     response->body[strlen(response->body)] = '\n';
 }
+
+void Response_addNumbers(struct Response * response, long int * buffer, long int bufferLength, long int total)
+{
+    int i = 0;
+    while (i < bufferLength && i < total)
+    {
+        Response_addNumber(response, buffer[i]);
+        i++;
+    }
+}

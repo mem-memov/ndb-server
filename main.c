@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     int connectionLimit = 10;
     int bufferLength = 8192;
 
-    struct Application * application = Application_construct();
+    struct Application * application = Application_construct(bufferLength);
 
     server = Server_construct(port, connectionLimit, bufferLength, application);
 

@@ -139,4 +139,13 @@ long int Request_countArguments(struct Request * request)
     return count;
 }
 
+void Request_getArguments(struct Request * request, long int * arguments, long int length)
+{
+    Error_inRequestBeforeGettingArguments(request->body[request->maxLength]);
 
+    long int n;
+    for (n = 0; n < length; n++)
+    {
+        arguments[n] = Request_getArgument(request, n+1);
+    }
+}

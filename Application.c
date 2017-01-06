@@ -5,9 +5,11 @@
 #include <ndb.h>
 #include <stdlib.h>
 
-struct Application * Application_construct()
+struct Application * Application_construct(int bufferLength)
 {
 	struct Application * application = malloc(sizeof(struct Application));
+
+	application->bufferLength = bufferLength;
 
 	return application;
 }
@@ -26,18 +28,12 @@ static void Application_create(struct Application * application, struct Request 
 static void Application_read(struct Application * application, struct Request * request, struct Response * response)
 {
     long int nodeId = Request_getArgument(request, 1);
-    int bufferLength = 4096;
-    long int buffer[bufferLength];
-    long int total = ndb_read(nodeId, buffer, bufferLength);
+    long int buffer[application->bufferLength];
+    long int total = ndb_read(nodeId, buffer, application->bufferLength);
 
-    Error_inApplicationWhileExecutingWithSmallBuffer(bufferLength, total);
+    Error_inApplicationWhileExecutingWithSmallBuffer(application->bufferLength, total);
 
-    int i = 0;
-    while (i < bufferLength && i < total)
-    {
-        Response_addNumber(response, buffer[i]);
-        i++;
-    }
+    Response_addNumbers(response, buffer, application->bufferLength, total);
 }
 
 static void Application_connect(struct Application * application, struct Request * request, struct Response * response)
@@ -51,22 +47,67 @@ static void Application_intersect(struct Application * application, struct Reque
 {
     long int nodeCount = Request_countArguments(request);
     long int nodeIds[nodeCount];
-    long int n;
-    for (n = 0; n < nodeCount; n++) {
-        nodeIds[n] = Request_getArgument(request, n+1);
-    }
-    int bufferLength = 4096;
-    long int buffer[bufferLength];
-    long int total = ndb_intersect(nodeIds, nodeCount, buffer, bufferLength);
+    Request_getArguments(request, nodeIds, nodeCount);
+    long int buffer[application->bufferLength];
+    long int total = ndb_intersect(nodeIds, nodeCount, buffer, application->bufferLength);
 
-    Error_inApplicationWhileExecutingWithSmallBuffer(bufferLength, total);
+    Error_inApplicationWhileExecutingWithSmallBuffer(application->bufferLength, total);
 
-    int i = 0;
-    while (i < bufferLength && i < total)
-    {
-        Response_addNumber(response, buffer[i]);
-        i++;
-    }
+    Response_addNumbers(response, buffer, application->bufferLength, total);
+}
+
+static void Application_union(struct Application * application, struct Request * request, struct Response * response)
+{
+    long int nodeCount = Request_countArguments(request);
+    long int nodeIds[nodeCount];
+    Request_getArguments(request, nodeIds, nodeCount);
+    long int buffer[application->bufferLength];
+    long int total = ndb_union(nodeIds, nodeCount, buffer, application->bufferLength);
+
+    Error_inApplicationWhileExecutingWithSmallBuffer(application->bufferLength, total);
+
+    Response_addNumbers(response, buffer, application->bufferLength, total);
+}
+
+static void Application_difference(struct Application * application, struct Request * request, struct Response * response)
+{
+    long int nodeCount = Request_countArguments(request);
+    long int nodeIds[nodeCount];
+    Request_getArguments(request, nodeIds, nodeCount);
+    long int buffer[application->bufferLength];
+    long int total = ndb_difference(nodeIds, nodeCount, buffer, application->bufferLength);
+
+    Error_inApplicationWhileExecutingWithSmallBuffer(application->bufferLength, total);
+
+    Response_addNumbers(response, buffer, application->bufferLength, total);
+}
+
+static void Application_insiders(struct Application * application, struct Request * request, struct Response * response)
+{
+    long int nodeCount = Request_countArguments(request);
+    Error_inApplicationWhileExecutingWithFewArguments(nodeCount, 2);
+    long int nodeIds[nodeCount];
+    Request_getArguments(request, nodeIds, nodeCount);
+    long int buffer[application->bufferLength];
+    long int total = ndb_insiders(nodeIds[0], nodeIds+1, nodeCount-1, buffer, application->bufferLength);
+
+    Error_inApplicationWhileExecutingWithSmallBuffer(application->bufferLength, total);
+
+    Response_addNumbers(response, buffer, application->bufferLength, total);
+}
+
+static void Application_outsiders(struct Application * application, struct Request * request, struct Response * response)
+{
+    long int nodeCount = Request_countArguments(request);
+    Error_inApplicationWhileExecutingWithFewArguments(nodeCount, 2);
+    long int nodeIds[nodeCount];
+    Request_getArguments(request, nodeIds, nodeCount);
+    long int buffer[application->bufferLength];
+    long int total = ndb_outsiders(nodeIds[0], nodeIds+1, nodeCount-1, buffer, application->bufferLength);
+
+    Error_inApplicationWhileExecutingWithSmallBuffer(application->bufferLength, total);
+
+    Response_addNumbers(response, buffer, application->bufferLength, total);
 }
 
 void Application_execute(struct Application * application, struct Request * request, struct Response * response)
@@ -86,6 +127,22 @@ void Application_execute(struct Application * application, struct Request * requ
     else if (1 == Request_isCommand(request, "intersect"))
     {
         Application_intersect(application, request, response);
+    }
+    else if (1 == Request_isCommand(request, "union"))
+    {
+        Application_union(application, request, response);
+    }
+    else if (1 == Request_isCommand(request, "difference"))
+    {
+        Application_difference(application, request, response);
+    }
+    else if (1 == Request_isCommand(request, "insiders"))
+    {
+        Application_insiders(application, request, response);
+    }
+    else if (1 == Request_isCommand(request, "outsiders"))
+    {
+        Application_outsiders(application, request, response);
     }
     else
     {
