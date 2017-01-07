@@ -10,7 +10,7 @@ Application.o: Application.c Application.h Request.h Response.h Error.h
 Connection.o: Connection.c Connection.h Request.h Response.h Error.h
 	gcc -c Connection.c
 
-Error.o: Error.c Error.h Logger.h
+Error.o: Error.c Error.h
 	gcc -c Error.c
 
 Listener.o: Listener.c Listener.h Connection.h Request.h Response.h Error.h
