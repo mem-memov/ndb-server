@@ -54,15 +54,15 @@ void Server_start(struct Server * server)
             while (1) {
                 Connection_receive(connection);
 
+                if (1 == Connection_isIdle(connection))
+                {
+                    continue;
+                }
+
                 if (1 == Connection_mustClose(connection))
                 {
                     Connection_close(connection);
                     exit(0);
-                }
-
-                if (1 == Connection_isIdle(connection))
-                {
-                    continue;
                 }
 
                 Application_execute(server->application, Connection_request(connection), Connection_response(connection));
