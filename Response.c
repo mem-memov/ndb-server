@@ -52,7 +52,6 @@ void Response_addNumber(struct Response * response, long int number)
     }
 
     char addition[sizeof(long int) + 1];
-    sprintf(addition, "%ld", number);
 
     if (0 < strlen(response->body))
     {
