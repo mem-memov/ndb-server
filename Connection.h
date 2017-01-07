@@ -26,4 +26,6 @@ void Connection_send(struct Connection * connection);
 
 char Connection_mustClose(struct Connection * connection);
 
+char Connection_isIdle(struct Connection * connection);
+
 #endif

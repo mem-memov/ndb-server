@@ -149,3 +149,15 @@ void Request_getArguments(struct Request * request, long int * arguments, long i
         arguments[n] = Request_getArgument(request, n+1);
     }
 }
+
+char Request_isEmpty(struct Request * request)
+{
+    if ('\0' == request->body[0])
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}

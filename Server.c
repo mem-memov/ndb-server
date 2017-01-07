@@ -60,6 +60,11 @@ void Server_start(struct Server * server)
                     exit(0);
                 }
 
+                if (1 == Connection_isIdle(connection))
+                {
+                    continue;
+                }
+
                 Application_execute(server->application, Connection_request(connection), Connection_response(connection));
                 Connection_send(connection);
             }

@@ -74,3 +74,8 @@ char Connection_mustClose(struct Connection * connection)
         return 0;
     }
 }
+
+char Connection_isIdle(struct Connection * connection)
+{
+    return Request_isEmpty(connection->request);
+}

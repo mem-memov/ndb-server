@@ -26,4 +26,6 @@ long int Request_countArguments(struct Request * request);
 
 void Request_getArguments(struct Request * request, long int * arguments, long int length);
 
+char Request_isEmpty(struct Request * request);
+
 #endif
