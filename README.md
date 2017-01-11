@@ -85,3 +85,8 @@ cd ~/userdb
 ndb-server 4444
 
 ```
+
+You can download a PHP (7.1) client for this database from [Composer Packagest](https://packagist.org/packages/mem-memov/ndb-php).
+```
+"mem-memov/ndb-php": "dev-master"
+```
